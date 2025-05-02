@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'rest_framework',
     'task1',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'proj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "proj/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
