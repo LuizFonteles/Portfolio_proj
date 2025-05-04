@@ -1,12 +1,32 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import requests
+from .serializer import StockSymbolSerializer
+
 
 @api_view(['GET'])
-def getData(request):
+def getStockSymbols(request):
     headers = {
         'Content-Type': 'application/json',
         'Authorization' : 'Token d9070e7e08ebae38639da21ddb761c8320b350ed',
     }
     requestResponse = requests.get("https://api.tiingo.com/iex", headers=headers)
-    return Response(requestResponse)
+    raw = requestResponse.json()
+    tickers_payload = []
+    for item in raw:
+        tickers_payload.append({'ticker': item['ticker']})
+    serializer = StockSymbolSerializer(data=tickers_payload, many=True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data)
+
+
+#@api_view(['GET'])
+#def getData(request):
+#    headers = {
+#        'Content-Type': 'application/json',
+#        'Authorization' : 'Token d9070e7e08ebae38639da21ddb761c8320b350ed',
+#    }
+#    requestResponse = requests.get("https://api.tiingo.com/iex", headers=headers)
+#    return Response(requestResponse)
+
