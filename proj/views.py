@@ -4,8 +4,9 @@ from django.contrib import messages
 
 
 def home(request):
-#    records = Stocks.objects.all()
-
+    print(request.user.is_authenticated)
+    if not request.user.is_authenticated:
+        redirect('login')  
 	# Check to see if logging in
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -20,7 +21,26 @@ def home(request):
             messages.error(request, "There Was An Error Logging In, Please Try Again...")
             return redirect('home')
     else:
-#        return render(request, 'home.html', {'records':records})
+        if request.user.is_authenticated:
+            stocks = request.user.stocks_followed.all()
+            return render(request, 'home.html', { 'stocks': stocks })
+        else:
+            return render(request, 'home.html', {})
+        
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        # Authenticate
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "You Have Been Logged In!")
+            return redirect('home')
+        else:
+            messages.error(request, "There Was An Error Logging In, Please Try Again...")
+            return redirect('home')
+    else:
         return render(request, 'home.html', {})
 
 def logout_user(request):
