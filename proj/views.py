@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+import sys
+sys.path.insert(0, '/home/luiz/proj/portfolio')
+
 
 
 def home(request):
@@ -22,8 +25,8 @@ def home(request):
             return redirect('home')
     else:
         if request.user.is_authenticated:
-            stocks = request.user.stocks_followed.all()
-            return render(request, 'home.html', { 'stocks': stocks })
+            stocks = request.user.stocks_followed.all().prefetch_related('alert_rules')
+            return render(request, 'home.html', {'stocks': stocks,})
         else:
             return render(request, 'home.html', {})
         

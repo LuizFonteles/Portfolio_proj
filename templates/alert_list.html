@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Your Alert Rules</h2>
+
+    {% if rules %}
+      <div class="list-group">
+        {% for r in rules %}
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ r.followed_stock.ticker.ticker }}</strong>
+              &lt; {{ r.threshold }}
+              {% if not r.active %}
+                <span class="badge bg-secondary">Inactive</span>
+              {% endif %}
+            </div>
+            <a href="{% url 'alert-edit' r.pk %}" class="btn btn-sm btn-outline-secondary">
+              Edit
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No alerts yet. <a href="{% url 'alert-create' %}">Create one now</a>.</p>
+    {% endif %}
+  </div>
+{% endblock %}

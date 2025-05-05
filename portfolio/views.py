@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .forms import AddStockForm
+from .forms import AddStockForm, AlertRuleForm
+from .models import AlertRule
 from api.views import getStocks
 import requests
 
@@ -44,3 +45,36 @@ def follow_stock(request):
     else:
         form = AddStockForm()
     return render(request, 'new_stock.html', { 'form': form })
+
+
+
+@login_required
+def list_alerts(request):
+    # fetch only this user’s rules
+    rules = request.user.stocks_followed \
+               .prefetch_related('alert_rules') \
+               .values_list('alert_rules__id', flat=False)
+    # simpler: directly
+    rules = AlertRule.objects.filter(followed_stock__user=request.user)
+    return render(request, 'alert_list.html', {'rules': rules})
+
+@login_required
+def create_or_edit_alert(request, pk=None):
+    if pk:
+        rule = get_object_or_404(
+            AlertRule, pk=pk, followed_stock__user=request.user
+        )
+    else:
+        rule = None
+
+    if request.method == 'POST':
+        form = AlertRuleForm(request.POST, instance=rule, user=request.user)
+        if form.is_valid():
+            alert = form.save()
+            messages.success(request, "Alert saved.")
+            return redirect('alert-list')
+    else:
+        form = AlertRuleForm(instance=rule, user=request.user)
+
+    return render(request, 'alert_form.html', {'form': form})
+

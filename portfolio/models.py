@@ -34,3 +34,17 @@ class Stocks_followed(models.Model):
     def __str__(self):
         return f"{self.user.username} → {self.ticker},{self.open}"
     
+
+class AlertRule(models.Model):
+    followed_stock = models.ForeignKey(
+        Stocks_followed,
+        on_delete=models.CASCADE,
+        related_name='alert_rules'
+    )
+    threshold = models.FloatField(help_text="Notify when price falls below this")
+    active    = models.BooleanField(default=True)
+    created   = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        # show the ticker and threshold
+        return f"{self.followed_stock.ticker.ticker} < {self.threshold}"
