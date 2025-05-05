@@ -2,9 +2,9 @@ from rest_framework import serializers
 import sys
 sys.path.insert(0, '/home/luiz/proj/portfolio')
 from portfolio.models import Stocks_symbols
+from portfolio.models import Stocks_followed
 
-#class StockSymbolSerializer(serializers.Serializer):
-#    ticker = serializers.CharField()
+
 
 class StockSymbolSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,3 +13,7 @@ class StockSymbolSerializer(serializers.ModelSerializer):
 
 
 
+class StocksSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Stocks_followed
+            fields = ['ticker','timestamp','open','high','low','mid','tngolast','prevClose','volume']

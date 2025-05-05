@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Follow a New Stock</h2>
+    <form method="post" novalidate class="mt-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="form-group mb-3">
+        {{ form.ticker.label_tag }}
+        {{ form.ticker }}
+        {{ form.ticker.errors }}
+      </div>
+      <button type="submit" class="btn btn-primary">Follow Stock</button>
+      <a href="{% url 'home' %}" class="btn btn-link">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
