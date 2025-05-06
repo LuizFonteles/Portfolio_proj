@@ -53,4 +53,7 @@ class AlertRule(models.Model):
 
     def __str__(self):
         # show the ticker and threshold
-        return f"{self.followed_stock.ticker.ticker} < {self.threshold}"
+        if not self.greater:
+            return f"{self.followed_stock.ticker} < {self.threshold}"
+        if self.greater:
+            return f"{self.followed_stock.ticker} > {self.threshold}"
