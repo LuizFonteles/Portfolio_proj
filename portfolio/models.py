@@ -8,12 +8,7 @@ class Stocks_symbols(models.Model):
     def __str__(self):
         return self.ticker
 
-class Portfolio(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    portfolio_name = models.CharField(max_length=10)
-    
-    def __str__(self):
-        return f"{self.name} ({self.user.username})"
+
     
 class Stocks_followed(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

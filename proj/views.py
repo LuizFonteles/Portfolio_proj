@@ -10,11 +10,11 @@ def home(request):
     print(request.user.is_authenticated)
     if not request.user.is_authenticated:
         redirect('login')  
-	# Check to see if logging in
+	# Checking to see if theyy ar logging in
     if request.method == 'POST':
-        username = request.POST.get('username')
+        usernam        # Authenticatee = request.POST.get('username')
         password = request.POST.get('password')
-        # Authenticate
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -34,7 +34,7 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        # Authenticate
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)

@@ -29,11 +29,11 @@ class AlertRuleForm(forms.ModelForm):
             'greater': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
+#blocking the user to put alerts in stocks that they don't follow
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         if user:
-            # only allow the user’s own followed stocks
             self.fields['followed_stock'].queryset = Stocks_followed.objects.filter(
                 user=user
             )

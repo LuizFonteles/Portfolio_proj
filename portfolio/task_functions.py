@@ -54,7 +54,7 @@ def check_alerts(data_map):
         data = data_map.get(ticker)  
         price = data['tngoLast']
         
-        # If price is below the user’s threshold, send email
+        # Making so that the price is below (or above) the user’s threshold, we will send an email
         if price is not None:
             if not rule.greater and  price < rule.threshold:
                 user = rule.followed_stock.user

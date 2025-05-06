@@ -1,0 +1,71 @@
+StockViewer
+
+A Django-based portfolio tracker and alerting system for stock prices, built with Celery and RabbitMQ to fetch live market data, schedule background updates, and notify users when custom thresholds are crossed.
+
+Features
+
+User Authentication: Secure sign-up, login, and session management.
+
+Follow Stocks: Users can add ticker symbols to their personal watchlist.
+
+Price Updates: Automatic background updates of open/high/low/latest prices every 3 minutes.
+
+Alert Rules: Configure "above" or "below" price thresholds on followed stocks.
+
+Email Notifications: Users receive an email when an alert condition is met.
+
+Dashboard: View your followed stocks and associated alerts in a Bootstrap-powered UI.
+
+
+Install system dependencies
+
+Python 3.11+
+
+PostgreSQL (or SQLite for quick start)
+
+RabbitMQ
+
+Set up a virtual environment
+
+python3 -m venv venv
+source venv/bin/activate
+
+Install Python requirements
+
+pip install -r requirements.txt
+
+Configure your environment
+
+
+Apply migrations & create superuser
+
+python manage.py migrate
+python manage.py createsuperuser
+
+Start the services
+
+Run the Django development server
+
+python manage.py runserver 0.0.0.0:8000
+
+Start RabbitMQ (if not already running):
+
+rabbitmq-server
+
+Run Celery worker
+
+celery -A hedgeview worker --loglevel=info
+
+Run Celery beat
+
+celery -A hedgeview beat --loglevel=info
+
+Usage:
+
+Register a new user at /accounts/register/.
+
+Follow stocks via the “Follow Stock” form (/follow/).
+
+Create alerts from the dashboard or the Alerts page.
+
+Check your email when prices cross your thresholds.

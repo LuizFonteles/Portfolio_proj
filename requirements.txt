@@ -1,0 +1,24 @@
+requirements.txt
+
+Django and REST framework
+
+Django>=4.2,<5.0
+djangorestframework>=3.14
+
+Database driver
+
+psycopg2-binary>=2.9
+
+Environment & config
+
+dj-database-url>=1.2
+python-dotenv>=0.21
+
+Celery and beat scheduler
+
+celery>=5.3
+django-celery-beat>=2.4
+
+HTTP requests
+
+requests>=2.28
