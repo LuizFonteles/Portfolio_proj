@@ -21,11 +21,12 @@ class AddStockForm(forms.ModelForm):
 class AlertRuleForm(forms.ModelForm):
     class Meta:
         model  = AlertRule
-        fields = ['followed_stock', 'threshold', 'active']
+        fields = ['followed_stock', 'threshold', 'active','greater']
         widgets = {
             'followed_stock': forms.Select(attrs={'class': 'form-control'}),
-            'threshold':      forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
-            'active':         forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'threshold': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'greater': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
     def __init__(self, *args, **kwargs):

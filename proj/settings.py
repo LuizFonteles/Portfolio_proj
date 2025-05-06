@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
@@ -137,12 +137,21 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
 
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+CELERY_BEAT_SCHEDULE = {
+    'update-followed-stocks-every-3-minutes': {
+        'task': 'portfolio.tasks.update_followed_stocks',
+        'schedule': 180.0,
+    },
+}
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'fontelesluizh@gmail.com'
-EMAIL_HOST_PASSWORD = 'jgewuxwtxnoyvssc'
+EMAIL_HOST_USER = 'stocksfollowedalert@gmail.com'
+EMAIL_HOST_PASSWORD = 'zogezktbgjgagmfu '
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'fontelesluizh@gmail.com'
+DEFAULT_FROM_EMAIL = 'stocksfollowedalert@gmail.com'

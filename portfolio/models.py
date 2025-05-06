@@ -29,10 +29,14 @@ class Stocks_followed(models.Model):
     tngolast = models.FloatField(null=True, blank=True)
     prevClose = models.FloatField(null=True, blank=True)
     volume = models.FloatField(null=True, blank=True)
-
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'ticker'],
+                                    name='unique_user_ticker')
+        ]
 
     def __str__(self):
-        return f"{self.user.username} → {self.ticker},{self.open}"
+        return f"{self.ticker}"
     
 
 class AlertRule(models.Model):
@@ -42,8 +46,10 @@ class AlertRule(models.Model):
         related_name='alert_rules'
     )
     threshold = models.FloatField(help_text="Notify when price falls below this")
-    active    = models.BooleanField(default=True)
-    created   = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    sleeping = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    greater = models.BooleanField(default=False)
 
     def __str__(self):
         # show the ticker and threshold
