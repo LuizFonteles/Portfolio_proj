@@ -4,8 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .forms import AddStockForm, AlertRuleForm
 from .models import AlertRule, Stocks_followed
-from api.views import getStocks
 import requests
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.db.models import Max
+
+
 
 def fetch_stock_data(tickers):
     headers = {
@@ -104,3 +108,5 @@ def delete_alert(request, pk):
             delete_it.delete()
             messages.success(request, "Alert deleted")
         return redirect('home')
+    
+

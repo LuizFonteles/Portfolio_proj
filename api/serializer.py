@@ -10,10 +10,3 @@ class StockSymbolSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stocks_symbols
         fields = ['ticker']
-
-
-
-class StocksSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Stocks_followed
-            fields = ['ticker','timestamp','open','high','low','mid','tngolast','prevClose','volume']

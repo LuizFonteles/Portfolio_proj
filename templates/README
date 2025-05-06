@@ -1,0 +1,17 @@
+StockViewer
+
+A Django-based portfolio tracker and alerting system for stock prices, built with Celery and RabbitMQ to fetch live market data, schedule background updates, and notify users when custom thresholds are crossed.
+
+Features
+
+User Authentication: Secure sign-up, login, and session management.
+
+Follow Stocks: Users can add ticker symbols to their personal watchlist.
+
+Price Updates: Automatic background updates of open/high/low/latest prices every 3 minutes.
+
+Alert Rules: Configure "above" or "below" price thresholds on followed stocks.
+
+Email Notifications: Users receive an email when an alert condition is met.
+
+Dashboard: View your followed stocks and associated alerts in a Bootstrap-powered UI.

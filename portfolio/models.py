@@ -52,7 +52,6 @@ class AlertRule(models.Model):
     greater = models.BooleanField(default=False)
 
     def __str__(self):
-        # show the ticker and threshold
         if not self.greater:
             return f"{self.followed_stock.ticker} < {self.threshold}"
         if self.greater:

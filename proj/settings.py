@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'portfolio',
     'rest_framework',
     'register',
-    'task1',
     'api',
 ]
 
